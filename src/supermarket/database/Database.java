@@ -1,12 +1,30 @@
 package supermarket.database;
 
+import java.util.Map;
+
 import supermarket.entities.AbstractIdentifiableEntity;
+
 
 public abstract class Database<T extends AbstractIdentifiableEntity> {
 
-	public abstract T add(T object);
-	public abstract void update(String id);
-	public abstract T getOne(String id);
-	public abstract void delete(String id);
+	private Map<String, T> db;
+	
+	public void add(T object) {
+		db.put(object.getId(), object);
+	}
+	
+	public void update(String id, T object) {
+		T temp = db.get(id);
+		temp = object;
+		db.put(id, temp);
+	}
+	
+	public T getOne(String id) {
+		return db.get(id);
+	}
+	
+	public void delete(String id) {
+		db.remove(id);
+	}
 	
 }
